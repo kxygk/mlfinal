@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.16">
+<title>Introduction</title>
+<style>
+@import '../web/kxygk.css';
+
+html {
+margin: 0;
+overflow-x: hidden;
+}
+body {
+font: 14px/20px italic Times, sans-serif;
+margin-left: 0px;
+margin-right: 0px;
+margin-left: 5vw;
+margin-right: 5vw;}
+#table-of-contents {display: none} /* disable for now.. till I have a better plan */
+pre.src {
+margin-left:  -5vw;
+margin-right: -5vw;
+font-family: monospace;
+font-size: 100%;
+background: #FFFFEE;
+overflow: auto;
+position: static;
+border-top: 1px solid  #e5e5d6;
+border-bottom: 1px solid  #e5e5d6;
+}
+pre.src-org {
+color: red;
+background: #FFFFFF;
+}
+blockquote {
+width: 100%;
+padding-left: 0.5em;
+border-left: solid;
+border-left-width: 4px;
+border-left-color: grey;
+font: 14px/20px italic Times, serif;
+background-color: #eefaf6; /*#f1ffee;*/
+margin: 0;
+.org-center {
+text-align: center;}
+}
+svg { /* newer inline SVGs */
+width: 100vw;
+overflow: hidden;
+height: auto;
+margin-left: -5vw;
+margin-right: 0;
+}
+/*.org-svg {
+width: 100vw;
+display: block;
+margin-left: auto;
+margin-right: auto;
+}*/
+
+img {
+max-width: 100%;
+height: auto;
+max-height: 80vh;
+vertical-align: middle;
+}
+ul {
+list-style-type: circle;
+padding-left: 1.5em;
+border-left: solid;
+border-left-width: 1px;
+border-left-color: grey;}
+h1 {color: #596060;}
+h2 {
+    color: black;
+font-style: italic;
+    padding-top: 0.5em;
+    border-bottom: 4px solid  #aaaaaa;}
+h3 {color: black;
+border-bottom: 2px dotted  #aaaaaa;}
+b, i{
+font-family: serif ;}
+sup { /* fixes line spacing issues due to superscripts */
+font-size: 0.8em;
+line-height: 0;
+position: relative;
+vertical-align: baseline;
+top: -0.5em;
+}
+sub { /* if these are missing then lines with subscripts take up more space */
+font-size: 0.8em;
+line-height: 0;
+}
+.title {
+font-weight: bold;
+}
+dt {
+font-weight: bold;
+}
+td p, dd p, li p{
+    margin: 0;
+}
+ul, p{
+    margin-top: 0;
+}
+.sidebarblock{
+    background:#f3f3f2;
+}
+.float-group::before,.float-group::after{content:" ";display:table}
+.left{float:left!important}
+.right{float:right!important}
+.thumb,.th{line-height:0;display:inline-block;border:4px solid #fff;box-shadow:0 0 0 1px #ddd}
+.imageblock.left{margin:.25em .625em 1.25em 0}
+.imageblock.right{margin:.25em 0 1.25em .625em}
+.imageblock>.title{margin-bottom:0}
+.imageblock.thumb,.imageblock.th{border-width:6px}
+.imageblock.thumb>.title,.imageblock.th>.title{padding:0 .125em}
+.image.left,.image.right{margin-top:.25em;margin-bottom:.25em;display:inline-block;line-height:0}
+.image.left{margin-right:.625em}
+.image.right{margin-left:.625em}
+.scrollbox{
+    white-space: nowrap;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+}
+.scrollbox img{
+    height:auto;
+    width:auto;
+    max-width: 70vw;
+    max-height: 60vh;
+    vertical-align: bottom;
+    scroll-snap-align: start;
+}
+video{
+    height:auto;
+    width:auto;
+    max-width: 30vw;
+    max-height: 30vh;
+
+</style>
+</head>
+<body class="article">
+<div id="header">
+</div>
+<div id="content">
+<div class="paragraph">
+<p>Dear Nijika,</p>
+</div>
+<div class="sect1">
+<h2 id="_introduction">Introduction</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In the interest of helping STARRY LiveHouse evaluate and select new music to be played at the final party, we present several models for music evaluation. Because we are not able to know the music that will be available on the day of the final party, we have in anticipation trained several models on a catalog of existing music. The training catalog contains each track&#8217;s danceability score and well as a variety of different characteristics. We hope our models will be able to help the DJ evaluate the danceability of each track that will be available on the day. We assume each track&#8217;s characteristics will be available for making this evaluation</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_training_catalog">The Training Catalog</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The training catalog of tracks (ie. the tranining data set) serves as the basis on which we build and tune our algorithms for prediction the danceability of new tracks that come in for evaluation. The training data provides a large variety of information about each track - organized across <mark>#</mark> categories (ie. features). Due to inconsistencies in the data collected into the catalog, not all features are available for each track</p>
+</div>
+<div class="sect2">
+<h3 id="_danceability">Danceability</h3>
+<div class="paragraph">
+<p>Danceability is the general metric we are trying to predict. This is a numerical value from 0.0 to 9.0. Values are only available in integer increments [0.0, 1.0, &#8230;&#8203;,  9.0]. While these seem to present 10 different categories, it&#8217;s more correct to think of this as a continious linear scale that has undergone rounding (for the sake of easy human consumption). We will treat this as a regression class problem</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_features">Features</h3>
+<div class="paragraph">
+<p>We separate features into two general categories - numerical and non-numerical features</p>
+</div>
+<div class="paragraph">
+<p>Numerical features are ones represented with either a integer or floating point value. These include things like the : <strong>Loudness</strong>, <strong>Speechiness</strong> and <strong>Acousticness</strong>. These values can be used directly</p>
+</div>
+<div class="paragraph">
+<p>Non-numerical features are those represented with a character string. These include things like: the <strong>Description</strong>, <strong>Title</strong>, <strong>Composer *and *Artist</strong>. These values present an extra challenge as they lack a meaningful numerical representation. The binary representation of the strings do not correspond to any "closeness" between values. For instance a change in capitalization could lead to two values having drastically different binary representations. To generate more meaningful and directly useable values we convert each string to a vector representation using the general purpose pre-trained doc2vec neural network model. This allows us to replace each column of strings in the original data with a set of numerical columns</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">TODO</dt>
+<dd>
+<p>Add details about how we run doc2vec</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_holes">Data holes</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Our training data is unfortunately systematically missing large amounts of features. An analysis of the distribution of these missing features shows that every features is consistently missing 14-15% of the time. Because of the large amount of features, there are few tracks that contain all possible features.</p>
+</div>
+<div class="paragraph">
+<p>TODO: Are the holes uncorrelated?
+TODO: How many songs have all features</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_model_1_linear_regression">Model 1: Linear Regression</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The first model we use is the linear regression model. The model is relatively simple and relies on trying to find a linear relationship between the different features the song&#8217;s final danceability. This presents us with a very fast and inuitive method that&#8217;s not prone to overfitting. This means the in-sample error should approximate the model&#8217;s general performance on out of sample (ie. future) data.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">TODO</dt>
+<dd>
+<p>Summarize result</p>
+</dd>
+<dt class="hdlist1">TODO</dt>
+<dd>
+<p>Give validation result</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>As we can see the validation error is quite close to the in-sample error, supporting our understanding that the linear regression model is not prone to overfitting.</p>
+</div>
+<div class="paragraph">
+<p>This result will act as a baseline for us when evaluating other methods. We should be able to outperform this model. If we are not, then we can know that we likely have an issue with in our implementation</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_model_2_regularized_polynomial_regression">Model 2: Regularized Polynomial Regression</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The next model to naturally try would be a regularized polynomial regression. This should provide moderately better results but is likely to introduce overfitting. The fitting parameters Q and C will need to be specified. Q is an integer value which indicates the polynomial order, while C is a regularization parameter which minimizes the effects of overfitting. Both parameters are tuned by adjusting and observing changes in the validation error. The validation</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_model_3_todo_choose_something_exciting">Model 3: TODO CHOOSE SOMETHING EXCITING&#8230;&#8203;</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The last model we try is</p>
+</div>
+<div class="paragraph">
+<p>Danceability 	Energy 	Key 	Loudness 	Speechiness 	Acousticness 	Instrumentalness 	Liveness 	Valence 	Tempo 	&#8230;&#8203; 	Album 	Uri 	Url_spotify 	Url_youtube 	Comments 	Description 	Title 	Channel 	Composer 	Artist</p>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

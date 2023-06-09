@@ -1,3 +1,9 @@
+:imagesdir: fig/
+:!webfonts:
+:stylesheet: ../web/adoc.css
+:table-caption!:
+:reproducible:
+:nofooter:
 
 
 Dear Nijika,
