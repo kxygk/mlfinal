@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<svg version="1.1" viewBox="0 0 200 60" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg">
+<g>
+<g>
+<g stroke-dasharray="1 1" stroke="#ccc">
+</g>
+<g stroke="black">
+<g fill="none" font-family="Arial, sans-serif" font-size="10" stroke="none" text-anchor="middle" />
+<line x1="10.00" x2="200.00" y1="59.99" y2="59.99" />
+</g>
+<g stroke="black">
+<g fill="black" font-family="Arial, sans-serif" font-size="10" stroke="none" text-anchor="middle" />
+<line x1="10.00" x2="10.00" y1="60.00" y2="0.00" />
+</g>
+</g>
+<g>
+<g stroke-dasharray="1 1" stroke="#ccc">
+</g>
+<g fill="none" stroke-width="13.571428571428571" stroke="#ffb2b0">
+<line x1="18.64" x2="18.64" y1="16.24" y2="59.99" />
+<line x1="139.55" x2="139.55" y1="16.84" y2="59.99" />
+<line x1="35.91" x2="35.91" y1="17.79" y2="59.99" />
+<line x1="87.73" x2="87.73" y1="31.63" y2="59.99" />
+<line x1="122.27" x2="122.27" y1="31.30" y2="59.99" />
+<line x1="70.45" x2="70.45" y1="46.82" y2="59.99" />
+<line x1="53.18" x2="53.18" y1="21.64" y2="59.99" />
+<line x1="174.09" x2="174.09" y1="22.97" y2="59.99" />
+<line x1="105.00" x2="105.00" y1="27.91" y2="59.99" />
+<line x1="191.36" x2="191.36" y1="0.01" y2="59.99" />
+<line x1="156.82" x2="156.82" y1="31.36" y2="59.99" />
+</g>
+<g stroke="black">
+<g fill="black" font-family="Arial, sans-serif" font-size="10" stroke="none" text-anchor="middle" />
+<line x1="10.00" x2="200.00" y1="59.99" y2="59.99" />
+</g>
+<g stroke="black">
+<g fill="black" font-family="Arial, sans-serif" font-size="10" stroke="none" text-anchor="middle" />
+<line x1="10.00" x2="10.00" y1="59.99" y2="0.00" />
+</g>
+</g>
+</g>
+</svg>

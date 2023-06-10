@@ -209,6 +209,12 @@ video{
 <div class="paragraph">
 <p>Danceability is the general metric we are trying to predict. This is a numerical value from 0.0 to 9.0. Values are only available in integer increments [0.0, 1.0, &#8230;&#8203;,  9.0]. While these seem to present 10 different categories, it&#8217;s more correct to think of this as a continious linear scale that has undergone rounding (for the sake of easy human consumption). We will treat this as a regression class problem</p>
 </div>
+<div class="paragraph">
+<p>Interestingly Danceability is mostly evenly distributed on the 0-9 range. This suggests it was not created by user input but is some synthetic metric created by some higher beings (like the TAs)</p>
+</div>
+<div class="paragraph">
+<p><span class="image"><img src="./Danceability.svg" alt="Danceability"></span></p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_features">Features</h3>
@@ -217,6 +223,39 @@ video{
 </div>
 <div class="paragraph">
 <p>Numerical features are ones represented with either a integer or floating point value. These include things like the : <strong>Loudness</strong>, <strong>Speechiness</strong> and <strong>Acousticness</strong>. These values can be used directly</p>
+</div>
+<div class="paragraph">
+<p>The distributions for a few notable ones is as follows:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./Valence.svg" alt="Valence">
+</div>
+<div class="title">Figure 1. Valence</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./Tempo.svg" alt="Tempo">
+</div>
+<div class="title">Figure 2. Tempo</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./Key.svg" alt="Key">
+</div>
+<div class="title">Figure 3. Key</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./Energy.svg" alt="Energy">
+</div>
+<div class="title">Figure 4. Energy</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="./Loudness.svg" alt="Loudness">
+</div>
+<div class="title">Figure 5. Loudness</div>
 </div>
 <div class="paragraph">
 <p>Non-numerical features are those represented with a character string. These include things like: the <strong>Description</strong>, <strong>Title</strong>, <strong>Composer *and *Artist</strong>. These values present an extra challenge as they lack a meaningful numerical representation. The binary representation of the strings do not correspond to any "closeness" between values. For instance a change in capitalization could lead to two values having drastically different binary representations. To generate more meaningful and directly useable values we convert each string to a vector representation using the general purpose pre-trained doc2vec neural network model. This allows us to replace each column of strings in the original data with a set of numerical columns</p>
