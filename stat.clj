@@ -108,6 +108,11 @@
 
 (def training (-> "train.csv"
                   ds/->dataset))
+
+
+
+(def testing (-> "test.csv"
+                  ds/->dataset))
 (-> training
     (ds/descriptive-stats {:stat-names [:col-name
                                         :datatype
@@ -387,15 +392,104 @@
                       cf/numeric
                       add-index
                       manhattan-nullfill)]
-  (ds/write! (->> hole-filled
+  (ds/write!
+    (-> training
+        (ds/add-or-update-column  (ds/column hole-filled   "Energy" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Key" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Loudness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Speechiness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Acousticness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Instrumentalness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Liveness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Valence" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Tempo" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Duration_ms" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Views" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Likes" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Stream" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "id" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Comments" )))
+    #_(->> hole-filled
+           (reduce (fn [fused-ds
+                        column]
+                     (ds/add-or-update-column fused-ds
+                                              column))
+                   training))
+    "no-holes-all.csv"))
+
+;;;;;; FOR FIXING #O$&#@&$@#&$)(#&$)(&#$*@#)*$
+(let [hole-filled (-> training
+                      cf/numeric
+                      add-index
+                      manhattan-nullfill
+                      (ds/head 10))]
+  ;; (println "LOUDNESS\n"
+  ;;          (ds/column hole-filled "Loudness"))
+  ;; (println "Hole filled..\n"
+  ;;          hole-filled)
+  ;; (println "Merged\n"
+  (-> training
+      (ds/add-or-update-column  (ds/column hole-filled   "Energy" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Key" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Loudness" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Speechiness" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Acousticness" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Instrumentalness" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Liveness" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Valence" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Tempo" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Duration_ms" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Views" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Likes" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Stream" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "id" ))
+      (ds/add-or-update-column  (ds/column hole-filled   "Comments" )))
+#_  (println "WHOLE THANG #$(&)(@&#)*$#@)"
+           (->> hole-filled
+                (reduce (fn [fused-ds
+                             column]
+                          (ds/add-or-update-column fused-ds
+                                                   column))
+                        (-> training
+                            (ds/head 10))))))
+;;;;;; FOR FIXING #O$&#@&$@#&$)(#&$)(&#$*@#)*$
+
+  
+(-> testing
+    cf/numeric
+    add-index
+    manhattan-nullfill
+    (ds/write! "no-holes-numeric-testing.csv"))
+
+(let [hole-filled (-> testing
+                      cf/numeric
+                      add-index
+                      manhattan-nullfill)]
+  (ds/write!
+    (-> testing
+        (ds/add-or-update-column  (ds/column hole-filled   "Energy" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Key" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Loudness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Speechiness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Acousticness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Instrumentalness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Liveness" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Valence" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Tempo" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Duration_ms" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Views" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Likes" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Stream" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "id" ))
+        (ds/add-or-update-column  (ds/column hole-filled   "Comments" )))
+    #_
+    (->> hole-filled
                   (reduce (fn [fused-ds
                                column]
                             (ds/add-or-update-column fused-ds
                                                      column))
-                          training))
-             "no-holes-all.csv"))
-
-                 
+                          testing))
+             "no-holes-all-testing.csv"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
