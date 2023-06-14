@@ -394,65 +394,22 @@
                       manhattan-nullfill)]
   (ds/write!
     (-> training
-        (ds/add-or-update-column  (ds/column hole-filled   "Energy" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Key" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Loudness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Speechiness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Acousticness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Instrumentalness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Liveness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Valence" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Tempo" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Duration_ms" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Views" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Likes" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Stream" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "id" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Comments" )))
-    #_(->> hole-filled
-           (reduce (fn [fused-ds
-                        column]
-                     (ds/add-or-update-column fused-ds
-                                              column))
-                   training))
+        (ds/add-or-update-column  (ds/column training   "Energy" ))
+        (ds/add-or-update-column  (ds/column training   "Key" ))
+        (ds/add-or-update-column  (ds/column training   "Loudness" ))
+        (ds/add-or-update-column  (ds/column training   "Speechiness" ))
+        (ds/add-or-update-column  (ds/column training   "Acousticness" ))
+        (ds/add-or-update-column  (ds/column training   "Instrumentalness" ))
+        (ds/add-or-update-column  (ds/column training   "Liveness" ))
+        (ds/add-or-update-column  (ds/column training   "Valence" ))
+        (ds/add-or-update-column  (ds/column training   "Tempo" ))
+        (ds/add-or-update-column  (ds/column training   "Duration_ms" ))
+        (ds/add-or-update-column  (ds/column training   "Views" ))
+        (ds/add-or-update-column  (ds/column training   "Likes" ))
+        (ds/add-or-update-column  (ds/column training   "Stream" ))
+        (ds/add-or-update-column  (ds/column training   "id" ))
+        (ds/add-or-update-column  (ds/column training   "Comments" )))
     "no-holes-all.csv"))
-
-;;;;;; FOR FIXING #O$&#@&$@#&$)(#&$)(&#$*@#)*$
-(let [hole-filled (-> training
-                      cf/numeric
-                      add-index
-                      manhattan-nullfill
-                      (ds/head 10))]
-  ;; (println "LOUDNESS\n"
-  ;;          (ds/column hole-filled "Loudness"))
-  ;; (println "Hole filled..\n"
-  ;;          hole-filled)
-  ;; (println "Merged\n"
-  (-> training
-      (ds/add-or-update-column  (ds/column hole-filled   "Energy" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Key" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Loudness" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Speechiness" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Acousticness" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Instrumentalness" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Liveness" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Valence" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Tempo" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Duration_ms" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Views" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Likes" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Stream" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "id" ))
-      (ds/add-or-update-column  (ds/column hole-filled   "Comments" )))
-#_  (println "WHOLE THANG #$(&)(@&#)*$#@)"
-           (->> hole-filled
-                (reduce (fn [fused-ds
-                             column]
-                          (ds/add-or-update-column fused-ds
-                                                   column))
-                        (-> training
-                            (ds/head 10))))))
-;;;;;; FOR FIXING #O$&#@&$@#&$)(#&$)(&#$*@#)*$
 
   
 (-> testing
@@ -467,55 +424,28 @@
                       manhattan-nullfill)]
   (ds/write!
     (-> testing
-        (ds/add-or-update-column  (ds/column hole-filled   "Energy" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Key" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Loudness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Speechiness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Acousticness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Instrumentalness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Liveness" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Valence" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Tempo" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Duration_ms" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Views" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Likes" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Stream" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "id" ))
-        (ds/add-or-update-column  (ds/column hole-filled   "Comments" )))
-    #_
-    (->> hole-filled
-                  (reduce (fn [fused-ds
-                               column]
-                            (ds/add-or-update-column fused-ds
-                                                     column))
-                          testing))
-             "no-holes-all-testing.csv"))
+        (ds/add-or-update-column  (ds/column testing   "Energy" ))
+        (ds/add-or-update-column  (ds/column testing   "Key" ))
+        (ds/add-or-update-column  (ds/column testing   "Loudness" ))
+        (ds/add-or-update-column  (ds/column testing   "Speechiness" ))
+        (ds/add-or-update-column  (ds/column testing   "Acousticness" ))
+        (ds/add-or-update-column  (ds/column testing   "Instrumentalness" ))
+        (ds/add-or-update-column  (ds/column testing   "Liveness" ))
+        (ds/add-or-update-column  (ds/column testing   "Valence" ))
+        (ds/add-or-update-column  (ds/column testing   "Tempo" ))
+        (ds/add-or-update-column  (ds/column testing   "Duration_ms" ))
+        (ds/add-or-update-column  (ds/column testing   "Views" ))
+        (ds/add-or-update-column  (ds/column testing   "Likes" ))
+        (ds/add-or-update-column  (ds/column testing   "Stream" ))
+        (ds/add-or-update-column  (ds/column testing   "id" ))
+        (ds/add-or-update-column  (ds/column testing   "Comments" )))
+    "no-holes-all-testing.csv"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-
-
 (defn
-   distance-squared
-  [row1
-   row2]
-  (reduce
-    +
-    (mapv (fn [coord1
-               coord2]
-            (pow (- coord1
-                    coord2)
-                 2))
-          row1
-          row2)))
-#_
-(distance-squared [1 2 3]
-                  [2 3 4])
-
-
-(defn
-  fill-nils-in-map-and-normalize
+  fill-nils-in-map
   "Run across and `input-map`
   and if the value is a nil
   then fill it with the value from `averages`
@@ -535,10 +465,9 @@
                value] ;; leave index untouched
               (if (nil? value)
                 [key
-                 1.0 #_average]
+                 average]
                 [key
-                 (/ value
-                    average)])))
+                 value])))
             input-map
             averages)))
 #_
@@ -548,7 +477,7 @@
                         :testing nil}))
 
 (defn
-  fill-nils-with-averages-and-normalize
+  fill-nils-with-averages
   "Take a `numeric` dataset and fill the `nil`
   values with each column's average value"
   [dataset]
@@ -557,18 +486,42 @@
                             cf/numeric
                             ds/columns))]
     (ds/row-map dataset
-                (partial fill-nils-in-map-and-normalize
+                (partial fill-nils-in-map
                          (->> dataset
                               cf/numeric
                               ds/columns
                               (mapv column-average))))))
-;; (-> training
-;;     (ds/head 10)
-;;     cf/numeric
-;;     (add-column 
-;;     fill-nils-with-averages)
+ (-> training
+     cf/numeric
+     add-index
+     fill-nils-with-averages
+     (ds/write! "no-holes-numeric-averages.csv"))
 
 
+(let [hole-filled (-> training
+                      cf/numeric
+                      add-index
+                      fill-nils-with-averages)]
+  (-> hole-filled
+      (ds/add-or-update-column  (ds/column training   "Energy" ))
+      (ds/add-or-update-column  (ds/column training   "Key" ))
+      (ds/add-or-update-column  (ds/column training   "Loudness" ))
+      (ds/add-or-update-column  (ds/column training   "Speechiness" ))
+      (ds/add-or-update-column  (ds/column training   "Acousticness" ))
+      (ds/add-or-update-column  (ds/column training   "Instrumentalness" ))
+      (ds/add-or-update-column  (ds/column training   "Liveness" ))
+      (ds/add-or-update-column  (ds/column training   "Valence" ))
+      (ds/add-or-update-column  (ds/column training   "Tempo" ))
+      (ds/add-or-update-column  (ds/column training   "Duration_ms" ))
+      (ds/add-or-update-column  (ds/column training   "Views" ))
+      (ds/add-or-update-column  (ds/column training   "Likes" ))
+      (ds/add-or-update-column  (ds/column training   "Stream" ))
+      (ds/add-or-update-column  (ds/column training   "id" ))
+      (ds/add-or-update-column  (ds/column training   "Comments" ))
+      (ds/write! "no-holes-all-averages.csv")))
+
+
+#_
 (defn
   closest-val
   "Given a numeric dataset
@@ -587,6 +540,7 @@
                 (fn [row]
                   {:distance (distance-squared (vals row)
                                                row-to-fill)}))))
+#_
 (-> training
     (ds/head 10)
     (ds/drop-columns "Danceability")
