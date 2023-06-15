@@ -153,7 +153,7 @@ video{
 <h2 id="_introduction">Introduction</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>In the interest of helping STARRY LiveHouse evaluate and select new music to be played at the final party, we present several models for music evaluation. Because we are not able to know the music that will be available on the day of the final party, we have in anticipation trained several models on a catalog of existing music. The training catalog contains each track&#8217;s danceability score and well as a variety of different characteristics. We hope our models will be able to help the DJ evaluate the danceability of each track that will be available on the day. We assume each track&#8217;s characteristics will be available for making this evaluation</p>
+<p>In the interest of helping STARRY LiveHouse evaluate and select new music to be played at the final party, we present several models for music evaluation. Because we are not able to know the music that will be available on the day of the final party, we have in anticipation trained several models on a catalog of existing music. The training catalog contains each track&#8217;s danceability score and well as a variety of different characteristics. We hope our models will be able to help the DJ evaluate the danceability of each track that will be available on the day of the party. We assume each track&#8217;s characteristics will be available for making this evaluation</p>
 </div>
 </div>
 </div>
@@ -161,7 +161,7 @@ video{
 <h2 id="_the_training_catalog">The Training Catalog</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The training catalog of tracks (ie. the tranining data set) serves as the basis on which we build and tune our algorithms for prediction the danceability of new tracks that come in for evaluation. The training data provides a large variety of information about each track - organized across 28 categories (ie. features). Due to inconsistencies in the data collected into the catalog, not all features are available for each track</p>
+<p>The training catalog of tracks (ie. the tranining data set) serves as the basis on which we build and tune our algorithms for predicting the danceability of new tracks that come in for evaluation. The training data provides a large variety of information about each track - organized across 28 categories (ie. features).</p>
 </div>
 <div class="paragraph">
 <p>General statistics about the data:</p>
@@ -205,12 +205,55 @@ video{
 <p>Note how some features are represented by <code>float64</code> values, while others have <code>string</code> values</p>
 </div>
 <div class="sect2">
-<h3 id="_danceability">Danceability</h3>
+<h3 id="_data_holes">Data Holes</h3>
 <div class="paragraph">
-<p>Danceability is the general metric we are trying to predict. This is a numerical value from 0.0 to 9.0. Values are only available in integer increments [0.0, 1.0, &#8230;&#8203;,  9.0]. While these seem to present 10 different categories, it&#8217;s more correct to think of this as a continious linear scale that has undergone rounding (for the sake of easy human consumption). We will treat this as a regression class problem</p>
+<p>Due to inconsistencies in the data collected into the catalog, not all features are available for each track. We tabulate the percentage of each column that is not defined</p>
+</div>
+<div class="listingblock">
+<div class="title">Percentage of each feature that is NULL (ie. has no defined value)</div>
+<div class="content">
+<pre>;; =&gt; [[:Views 15]
+;;     [:Liveness 14]
+;;     [:official_video 15]
+;;     [:Acousticness 15]
+;;     [:Speechiness 14]
+;;     [:Key 15]
+;;     [:Valence 14]
+;;     [:Title 15]
+;;     [:Composer 14]
+;;     [:Channel 14]
+;;     [:Instrumentalness 15]
+;;     [:Track 14]
+;;     [:Danceability 0]
+;;     [:Album 15]
+;;     [:Duration_ms 15]
+;;     [:Album_type 14]
+;;     [:Stream 14]
+;;     [:id 0]
+;;     [:Comments 15]
+;;     [:Url_spotify 15]
+;;     [:Energy 14]
+;;     [:Loudness 14]
+;;     [:Description 15]
+;;     [:Uri 14]
+;;     [:Tempo 14]
+;;     [:Licensed 15]
+;;     [:Url_youtube 14]
+;;     [:Artist 14]
+;;     [:Likes 15]]</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Interestingly Danceability is mostly evenly distributed on the 0-9 range. This suggests it was not created by user input but is some synthetic metric created by some higher beings (like the TAs)</p>
+<p>The result shows an unusually consistent distribution of holes in the data (suggesting an artificial origin&#8230;&#8203;). This removes a potential source of added complexity as all features are affected equally</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_danceability">Danceability</h3>
+<div class="paragraph">
+<p>Danceability is the general metric we are trying to predict. This is a numerical value from 0.0 to 9.0. Values are only available in integer increments [0.0, 1.0, &#8230;&#8203;,  9.0]. One can treat these as 10 different categories, but it&#8217;s more correct to think of this as a continious linear scale that has undergone rounding (for the sake of easy human consumption).</p>
+</div>
+<div class="paragraph">
+<p>Interestingly Danceability is very evenly distributed on the 0-9 range. This suggests it was not created by user input but is some synthetic metric created by TAs</p>
 </div>
 <div class="paragraph">
 <p><span class="image"><img src="./Danceability.svg" alt="Danceability"></span></p>
@@ -225,106 +268,359 @@ video{
 <p>Numerical features are ones represented with either a integer or floating point value. These include things like the : <strong>Loudness</strong>, <strong>Speechiness</strong> and <strong>Acousticness</strong>. These values can be used directly</p>
 </div>
 <div class="paragraph">
-<p>The distributions for a few notable ones is as follows:</p>
+<p>The distributions for a few notable ones have the following shapes:</p>
 </div>
-<div class="imageblock">
+<div class="exampleblock columns">
+<div class="content">
+<div class="imageblock column">
 <div class="content">
 <img src="./Valence.svg" alt="Valence">
 </div>
 <div class="title">Figure 1. Valence</div>
 </div>
-<div class="imageblock">
+<div class="imageblock column">
 <div class="content">
 <img src="./Tempo.svg" alt="Tempo">
 </div>
 <div class="title">Figure 2. Tempo</div>
 </div>
-<div class="imageblock">
+<div class="imageblock column">
 <div class="content">
 <img src="./Key.svg" alt="Key">
 </div>
 <div class="title">Figure 3. Key</div>
 </div>
-<div class="imageblock">
+<div class="imageblock column">
 <div class="content">
 <img src="./Energy.svg" alt="Energy">
 </div>
 <div class="title">Figure 4. Energy</div>
 </div>
-<div class="imageblock">
+<div class="imageblock column">
 <div class="content">
 <img src="./Loudness.svg" alt="Loudness">
 </div>
 <div class="title">Figure 5. Loudness</div>
 </div>
-<div class="paragraph">
-<p>Non-numerical features are those represented with a character string. These include things like: the <strong>Description</strong>, <strong>Title</strong>, <strong>Composer *and *Artist</strong>. These values present an extra challenge as they lack a meaningful numerical representation. The binary representation of the strings do not correspond to any "closeness" between values. For instance a change in capitalization could lead to two values having drastically different binary representations. To generate more meaningful and directly useable values we convert each string to a vector representation using the general purpose pre-trained doc2vec neural network model. This allows us to replace each column of strings in the original data with a set of numerical columns</p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">TODO</dt>
-<dd>
-<p>Add details about how we run doc2vec</p>
-</dd>
-</dl>
+</div>
+<div class="paragraph">
+<p>Most other features are dominated by near-zero values</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_data_holes">Data holes</h2>
+<h2 id="_method_1_linear_regression">Method 1 - Linear Regression</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Our training data is unfortunately systematically missing large amounts of features. An analysis of the distribution of these missing features shows that every features is consistently missing 14-15% of the time. Because of the large amount of features, there are few tracks that contain all possible features.</p>
+<p>To establish a baseline and for further analysis, we first implement the most basic learning algorithm we can imagine - the <strong>linear regression</strong>. This allows us to get a general sense for how challenging the given dataset is and it allows us to have an initial score that we can try to beat.</p>
 </div>
 <div class="paragraph">
-<p>TODO: Are the holes uncorrelated?
-TODO: How many songs have all features</p>
+<p>Linear regression simply fits an N-dimension hyperplane using the pseudo-inverse</p>
+</div>
+<div class="sect2">
+<h3 id="_data_preparation">Data preparation</h3>
+<div class="paragraph">
+<p>For simplicity we constrain ourselves to the 16 numerical features in the catalog. Columns containing strings are for the time being simply discarded. As mentioned previously, the data contains holes. We fill the holes using the average of the values for each column (ignoring other NULL holes). This will hopefully minimize any bias (vs. for instance setting all the values to zero or one).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_result">Result</h3>
+<div class="paragraph">
+<p>We characterize the model performance using <code>sklearn.metrics.precision_recall_fscore_support</code> - which helps us put together the following metrics:</p>
+</div>
+<div class="ulist">
+<div class="title">Metrics</div>
+<ul>
+<li>
+<p><strong>Features</strong>:: 16</p>
+</li>
+<li>
+<p><strong>score</strong>:: 0.350689</p>
+</li>
+<li>
+<p><strong>accuracy</strong>:: 0.145894</p>
+</li>
+<li>
+<p><strong>precision</strong>:: 0.133607</p>
+</li>
+<li>
+<p><strong>recall</strong>:: 0.097358</p>
+</li>
+<li>
+<p><strong>f1</strong>:: 0.088267</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Definitions</div>
+<ul>
+<li>
+<p><strong>Features</strong>:: is the totaly number of dimensions/columns being considered</p>
+</li>
+<li>
+<p><strong>Score</strong>:: "Return the coefficient of determination of the prediction" This is a statistical evaluation of the performance of the model on the training data. The documentation further reads: ”The coefficient of determination is defined as
+, where is the residual sum of squares ( (y_true - y_pred)^2).sum() and is the total sum of squares ( (y_true - y_true.mean() )^2 ).sum(). The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse). A constant model that always predicts the expected value of y, disregarding the input features, would get a score of 0.0.“</p>
+</li>
+<li>
+<p><strong>Precision</strong>:: "The precision is the ratio tp / (tp + fp) where tp is the number of true positives and fp the number of false positives. The precision is intuitively the ability of the classifier not to label a negative sample as positive."</p>
+</li>
+<li>
+<p><strong>Recall</strong>:: "The recall is the ratio tp / (tp + fn) where tp is the number of true positives and fn the number of false negatives. The recall is intuitively the ability of the classifier to find all the positive samples."</p>
+</li>
+<li>
+<p><strong>f1</strong>:: "The F-beta score can be interpreted as a weighted harmonic mean of the precision and recall, where an F-beta score reaches its best value at 1 and worst score at 0."</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Quoted excerpts are from the Scikit documentation:</div>
+<ul>
+<li>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html" class="bare">https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LinearRegression.html</a></p>
+</li>
+<li>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html#sklearn.metrics.accuracy_score" class="bare">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.accuracy_score.html#sklearn.metrics.accuracy_score</a></p>
+</li>
+<li>
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html" class="bare">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.precision_recall_fscore_support.html</a></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_model_1_linear_regression">Model 1: Linear Regression</h2>
+<h2 id="_method_2_logistic_regression">Method 2 - Logistic Regression</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The first model we use is the linear regression model. The model is relatively simple and relies on trying to find a linear relationship between the different features the song&#8217;s final danceability. This presents us with a very fast and inuitive method that&#8217;s not prone to overfitting. This means the in-sample error should approximate the model&#8217;s general performance on out of sample (ie. future) data.</p>
+<p>Since the Danceability score is constrained to a fixed [0-9] range, the linear regression is not ideally suited for learning. The trained system is able to erroneously output values outside of the valid range. This is a situation where something like the logistic equation can help provide a bound on the output space</p>
 </div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">TODO</dt>
-<dd>
-<p>Summarize result</p>
-</dd>
-<dt class="hdlist1">TODO</dt>
-<dd>
-<p>Give validation result</p>
-</dd>
-</dl>
+<div class="sect2">
+<h3 id="_hole_filling_revisited">Hole filling revisited</h3>
+<div class="paragraph">
+<p>When looking at some feature like <strong>Key</strong>, we can see it is bimodal, with many songs at high and low Keys. Relatively fewer tracks are found in the middle range. Hence when filling in missing values, using the <strong>Key</strong> average would produce an unlikely value. Furthermore, while it&#8217;s hard to introspect the higher dimensional space of all the features, one imagines music clusters according to genre and similarity. For instance inution tells us that high tempo music is more likely to be loud.</p>
 </div>
 <div class="paragraph">
-<p>As we can see the validation error is quite close to the in-sample error, supporting our understanding that the linear regression model is not prone to overfitting.</p>
+<p>To fill in missing values, instead of using a global average, we would ideally find tracks with similar characteristics in the catalog and then fill in our missing value based on these "neighbours". We implement a simple version of this concept. When we find a missing feature we look through all the tracks that have this missing feature and finding the one that is closest in the N-dimensional feature space. We then simply copy over the value into our empty spot.</p>
 </div>
 <div class="paragraph">
-<p>This result will act as a baseline for us when evaluating other methods. We should be able to outperform this model. If we are not, then we can know that we likely have an issue with in our implementation</p>
+<p>The last complication is that since missing values occure at a relativel high rate (~15%), we are likely to have other missing values in other features of the track. So we need a method to estimate the distance between tracks with incomplete information. We accomplish this by calculating a Manhattan/L1 norm and then normalizing the value by the number of dimensions involved. In other words we calculate the distance between two track with the dimensions available (sum of the differences of each coocurring feature), and then divide by the number of dimensions. Thereby irrespective of how many features are missing, we can generate an estimate of the distance that is of similar magnitude.</p>
+</div>
+<div class="paragraph">
+<p>Hole filling code is available here: <a href="https://github.com/kxygk/mlfinal/blob/master/stat.clj" class="bare">https://github.com/kxygk/mlfinal/blob/master/stat.clj</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dealing_with_strings">Dealing with Strings</h3>
+<div class="paragraph">
+<p>Non-numerical features are those represented with a character string. These include things like: the <strong>Description</strong>, <strong>Title</strong>, <strong>Composer</strong> and <strong>Artist</strong>. Naturally these encode a lot of relevant information when comparing tracks. But these values present an extra challenge as they lack a meaningful numerical representation. The binary representation of the strings do not correspond to any "closeness" between values. For instance a change in capitalization could lead to two values having drastically different binary representations. To generate more meaningful and directly useable values we convert each string to a vector representation using the general purpose pre-trained <strong>bert2vec</strong> neural network model.</p>
+</div>
+<div class="paragraph">
+<p>This is provided to us by the PyTorch project: <a href="https://pypi.org/project/pytorch-pretrained-bert/" class="bare">https://pypi.org/project/pytorch-pretrained-bert/</a></p>
+</div>
+<div class="paragraph">
+<p>This model allows us to transform each strings in to a set of numerical columns. The number of columns is in the thousands, and it makes further training impractical. We reduce the number of dimensions by doing a simple linear regression between bert-generated-vectors and our target Danceability. We keep X amount of features/dimensions and discard the rest</p>
+</div>
+<div class="paragraph">
+<p>Tuning of the discard parameter showed us that just keeping approximately X=125 features generates optimal results accross all models - with different models exhibiting different degrees of sensitivity. The Logistic Regression model is particularly insensitive and generates good results (an accuracy of 0.11269) with both just 80 vectors as well as 250 vectors. Interpreting this result is challenging - but it suggests that the Logistic Regression model is not able to leverage the vectorized strings as well as other models and relies more heavily on the numeric data to yield good performance</p>
+</div>
+<div class="paragraph">
+<p>We also evaluated the <strong>doc2vec</strong> model, which similarly does a string to vector conversion, but it gave us inferior results</p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_model_2_regularized_polynomial_regression">Model 2: Regularized Polynomial Regression</h2>
+<h2 id="_method_3_svm">Method 3 - SVM</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The next model to naturally try would be a regularized polynomial regression. This should provide moderately better results but is likely to introduce overfitting. The fitting parameters Q and C will need to be specified. Q is an integer value which indicates the polynomial order, while C is a regularization parameter which minimizes the effects of overfitting. Both parameters are tuned by adjusting and observing changes in the validation error. The validation</p>
+<p>We next explore an alternate strategy of replacing the regression method with a classification method. As we explored during the course, classification seems to provide us with a much larger variety of different algorithms. If we treat the different danceability scores as quantized groups, then it should be possible to guide our learning to be able to distinguish between different danceablity levels ( 0,1 .., 9)</p>
+</div>
+<div class="paragraph">
+<p>The prime candidate for classification is the Support Vector Machine. We employ the SVM though the Python library <code>sklearn.svm.LinearSVC</code> . See: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html" class="bare">https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html</a></p>
+</div>
+<div class="paragraph">
+<p>As illustrated in the documentation, this provides a wrapper around <code>liblinear</code> (ie. this will use the linear kernel and a hard margin). As previously, we vary the amount of string-equivalent features to include and we observe a noteable change in the resulting accuracy. This suggests to us that the method is more actively employing information in the BERT vectors.</p>
+</div>
+<div class="ulist">
+<div class="title">Bert2Vec features selection sensitivity</div>
+<ul>
+<li>
+<p><strong>Features</strong>:  80 &#8594;	<strong>Accuracy</strong> 0.083576</p>
+</li>
+<li>
+<p><strong>Features</strong>: 100 &#8594;	<strong>Accuracy</strong> 0.106290</p>
+</li>
+<li>
+<p><strong>Features</strong>: 125 &#8594;	<strong>Accuracy</strong> 0.090565</p>
+</li>
+<li>
+<p><strong>Features</strong>: 150 &#8594;	<strong>Accuracy</strong> 0.101340</p>
+</li>
+<li>
+<p><strong>Features</strong>: 175 &#8594;	<strong>Accuracy</strong> 0.112405</p>
+</li>
+<li>
+<p><strong>Features</strong>: 200 &#8594;	<strong>Accuracy</strong> 0.096389</p>
+</li>
+<li>
+<p><strong>Features</strong>: 250 &#8594;	<strong>Accuracy</strong> 0.106872</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>The resulting accuracy provides a noteable improvement in performance when compared with the Logistic Method</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_model_3_todo_choose_something_exciting">Model 3: TODO CHOOSE SOMETHING EXCITING&#8230;&#8203;</h2>
+<h2 id="_method_4_decision_trees">Method 4 - Decision Trees</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The last model we try is</p>
+<p><a href="https://scikit-learn.org/stable/modules/tree.html" class="bare">https://scikit-learn.org/stable/modules/tree.html</a></p>
 </div>
 <div class="paragraph">
-<p>Danceability 	Energy 	Key 	Loudness 	Speechiness 	Acousticness 	Instrumentalness 	Liveness 	Valence 	Tempo 	&#8230;&#8203; 	Album 	Uri 	Url_spotify 	Url_youtube 	Comments 	Description 	Title 	Channel 	Composer 	Artist</p>
+<p>Decision Trees provide a way to aggregate many simpler models into one powerful model. This has the potential to build a very flexible model that can accomodate unusual data</p>
+</div>
+<div class="paragraph">
+<p>The resulting accuracy is significantly worse than simpler models. Not surprisingly it is not sensitive to the number of BERT vectors selected:</p>
+</div>
+<div class="ulist">
+<div class="title">Bert2Vec features selection sensitivity</div>
+<ul>
+<li>
+<p><strong>Features</strong>:  80 &#8594;	<strong>Accuracy</strong> 0.207338</p>
+</li>
+<li>
+<p><strong>Features</strong>: 100 &#8594;	<strong>Accuracy</strong> 0.205882</p>
+</li>
+<li>
+<p><strong>Features</strong>: 125 &#8594;	<strong>Accuracy</strong> 0.203553</p>
+</li>
+<li>
+<p><strong>Features</strong>: 150 &#8594;	<strong>Accuracy</strong> 0.210250</p>
+</li>
+<li>
+<p><strong>Features</strong>: 175 &#8594;	<strong>Accuracy</strong> 0.204135</p>
+</li>
+<li>
+<p><strong>Features</strong>: 200 &#8594;	<strong>Accuracy</strong> 0.209086</p>
+</li>
+<li>
+<p><strong>Features</strong>: 250 &#8594;	<strong>Accuracy</strong> 0.205882</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Our guess is that the model is more suitable for very non-linear data. Danceability is likely a relatively linear problem in comparison. One can imagine louder, faster pace music with more vocals will generally be more danceable. In this higher dimensional space one doesn&#8217;t imagine there are too many segregated islands where music is danceable.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_method_5_gradientboostingclassifier">Method 5 - GradientBoostingClassifier</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html#sklearn-ensemble-gradientboostingclassifier" class="bare">https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.GradientBoostingClassifier.html#sklearn-ensemble-gradientboostingclassifier</a></p>
+</div>
+<div class="paragraph">
+<p>This provides an alternate tree based classifier - where at each stage you are doing multiclass classification. This method seems to suffer from the same issues as the Decision Trees. This is also likely having issues b/c of the strong emphasis on classification</p>
+</div>
+<div class="ulist">
+<div class="title">Bert2Vec features selection sensitivity</div>
+<ul>
+<li>
+<p><strong>Features</strong>:  80 &#8594;	<strong>Accuracy</strong> 0.258591</p>
+</li>
+<li>
+<p><strong>Features</strong>: 100 &#8594;	<strong>Accuracy</strong> 0.261794</p>
+</li>
+<li>
+<p><strong>Features</strong>: 125 &#8594;	<strong>Accuracy</strong> 0.261794</p>
+</li>
+<li>
+<p><strong>Features</strong>: 150 &#8594;	<strong>Accuracy</strong> 0.260920</p>
+</li>
+<li>
+<p><strong>Features</strong>: 175 &#8594;	<strong>Accuracy</strong> 0.265871</p>
+</li>
+<li>
+<p><strong>Features</strong>: 200 &#8594;	<strong>Accuracy</strong> 0.261794</p>
+</li>
+<li>
+<p><strong>Features</strong>: 250 &#8594;	<strong>Accuracy</strong> 0.258008</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_method_6_randomforestclassifier">Method 6 - RandomForestClassifier</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn-ensemble-randomforestclassifier" class="bare">https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestClassifier.html#sklearn-ensemble-randomforestclassifier</a></p>
+</div>
+<div class="paragraph">
+<p>The last tree based method we tried, again gives poor results. And once again we suspect the same issues arose here.</p>
+</div>
+<div class="ulist">
+<div class="title">Bert2Vec features selection sensitivity</div>
+<ul>
+<li>
+<p><strong>Features</strong>:  80 &#8594;	<strong>Accuracy</strong> 0.274607</p>
+</li>
+<li>
+<p><strong>Features</strong>: 100 &#8594;	<strong>Accuracy</strong> 0.262959</p>
+</li>
+<li>
+<p><strong>Features</strong>: 125 &#8594;	<strong>Accuracy</strong> 0.266453</p>
+</li>
+<li>
+<p><strong>Features</strong>: 150 &#8594;	<strong>Accuracy</strong> 0.263250</p>
+</li>
+<li>
+<p><strong>Features</strong>: 175 &#8594;	<strong>Accuracy</strong> 0.262376</p>
+</li>
+<li>
+<p><strong>Features</strong>: 200 &#8594;	<strong>Accuracy</strong> 0.258591</p>
+</li>
+<li>
+<p><strong>Features</strong>: 250 &#8594;	<strong>Accuracy</strong> 0.257135</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_discussion">Discussion</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>As we see from the results, more complex models do not seem to provide any clear performance benefits over simpler models. The Linear model provides a "useable" performance, but is notably lagging behind other candidates. The logistic equation is not a computationally taxing transformation so it doesn&#8217;t present a serious step up in terms of complexity - but it does yeild substantial improvements. Furthermore the linear model, unlike the logistic one, suffers from possibility of yielding values outside the valid range</p>
+</div>
+<div class="paragraph">
+<p>Both the Logistic Regression and SVM models provide good robust results. They demonstrate that this class of problems can be fluidly reformulated from a regression problem to a classification problem while maintaining good robust learning. While the SVM does generate a better accuracy, the Logistic model may be preferrable if many new tracks need to evaluated at once, or the model needs to be executed in a constrained environment (ex: microcontroller or low power device). The performance penalty is minor and the danger of overfitting is minimized. I suggest STARRY LiveHouse evaluate their requirements and select one model among these two.</p>
+</div>
+<div class="paragraph">
+<p>For completeness an additional 3 more complex tree based models were evaluated and were found to provide inadequate performance. We provide them here for completeness and as a future reference. The tree based methods seem more appropriate when you have more complex nonlinear relationships between the features. However our human intuition tells us that the Danceability of a song generally correlates (in a stochastic way) with certain properties of the song.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_workload">Workload</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Everything was done collaboratively and in active discussion with each other. The general work balance was as follows</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>何品諭 :: - Wrote all the machine learning algorithms and managed the Google Colab workspace. Did all the parameter tuning and research into what&#8217;s available in Scikit</p>
+</li>
+<li>
+<p>George Kontsevich (康笑愚) :: - Did the statistical analysis of the data, implemented a nearest-neighbour hole filling algorithm, wrote the report</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
