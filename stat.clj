@@ -520,6 +520,37 @@
       (ds/add-or-update-column  (ds/column training   "Comments" ))
       (ds/write! "no-holes-all-averages.csv")))
 
+ (-> testing
+     cf/numeric
+     add-index
+     fill-nils-with-averages
+     (ds/write! "no-holes-numeric-averages-testing.csv"))
+
+
+(let [hole-filled (-> testing
+                      cf/numeric
+                      add-index
+                      fill-nils-with-averages)]
+  (-> hole-filled
+      (ds/add-or-update-column  (ds/column testing   "Energy" ))
+      (ds/add-or-update-column  (ds/column testing   "Key" ))
+      (ds/add-or-update-column  (ds/column testing   "Loudness" ))
+      (ds/add-or-update-column  (ds/column testing   "Speechiness" ))
+      (ds/add-or-update-column  (ds/column testing   "Acousticness" ))
+      (ds/add-or-update-column  (ds/column testing   "Instrumentalness" ))
+      (ds/add-or-update-column  (ds/column testing   "Liveness" ))
+      (ds/add-or-update-column  (ds/column testing   "Valence" ))
+      (ds/add-or-update-column  (ds/column testing   "Tempo" ))
+      (ds/add-or-update-column  (ds/column testing   "Duration_ms" ))
+      (ds/add-or-update-column  (ds/column testing   "Views" ))
+      (ds/add-or-update-column  (ds/column testing   "Likes" ))
+      (ds/add-or-update-column  (ds/column testing   "Stream" ))
+      (ds/add-or-update-column  (ds/column testing   "id" ))
+      (ds/add-or-update-column  (ds/column testing   "Comments" ))
+      (ds/write! "no-holes-all-averages-testing.csv")))
+
+
+
 
 #_
 (defn
