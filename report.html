@@ -364,6 +364,9 @@ video{
 , where is the residual sum of squares ( (y_true - y_pred)^2).sum() and is the total sum of squares ( (y_true - y_true.mean() )^2 ).sum(). The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse). A constant model that always predicts the expected value of y, disregarding the input features, would get a score of 0.0.“</p>
 </li>
 <li>
+<p><strong>Accuracy</strong>:: - "In multilabel classification, this [..] computes subset accuracy: the set of labels predicted for a sample must exactly match the corresponding set of labels in y_true."</p>
+</li>
+<li>
 <p><strong>Precision</strong>:: "The precision is the ratio tp / (tp + fp) where tp is the number of true positives and fp the number of false positives. The precision is intuitively the ability of the classifier not to label a negative sample as positive."</p>
 </li>
 <li>
@@ -418,7 +421,7 @@ video{
 <p>Non-numerical features are those represented with a character string. These include things like: the <strong>Description</strong>, <strong>Title</strong>, <strong>Composer</strong> and <strong>Artist</strong>. Naturally these encode a lot of relevant information when comparing tracks. But these values present an extra challenge as they lack a meaningful numerical representation. The binary representation of the strings do not correspond to any "closeness" between values. For instance a change in capitalization could lead to two values having drastically different binary representations. To generate more meaningful and directly useable values we convert each string to a vector representation using the general purpose pre-trained <strong>bert2vec</strong> neural network model.</p>
 </div>
 <div class="paragraph">
-<p>This is provided to us by the PyTorch project: <a href="https://pypi.org/project/pytorch-pretrained-bert/" class="bare">https://pypi.org/project/pytorch-pretrained-bert/</a></p>
+<p>This is provided to us by the HuggingFace project: <a href="https://huggingface.co/docs/transformers/model_doc/bert-generation" class="bare">https://huggingface.co/docs/transformers/model_doc/bert-generation</a></p>
 </div>
 <div class="paragraph">
 <p>This model allows us to transform each strings in to a set of numerical columns. The number of columns is in the thousands, and it makes further training impractical. We reduce the number of dimensions by doing a simple linear regression between bert-generated-vectors and our target Danceability. We keep X amount of features/dimensions and discard the rest</p>

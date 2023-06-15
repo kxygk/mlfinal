@@ -161,6 +161,7 @@ We characterize the model performance using `sklearn.metrics.precision_recall_fs
 - *Features*:: is the totaly number of dimensions/columns being considered
 - *Score*:: "Return the coefficient of determination of the prediction" This is a statistical evaluation of the performance of the model on the training data. The documentation further reads: ”The coefficient of determination is defined as
 , where is the residual sum of squares ( (y_true - y_pred)^2).sum() and is the total sum of squares ( (y_true - y_true.mean() )^2 ).sum(). The best possible score is 1.0 and it can be negative (because the model can be arbitrarily worse). A constant model that always predicts the expected value of y, disregarding the input features, would get a score of 0.0.“
+- *Accuracy*:: - "In multilabel classification, this [..] computes subset accuracy: the set of labels predicted for a sample must exactly match the corresponding set of labels in y_true."
 - *Precision*:: "The precision is the ratio tp / (tp + fp) where tp is the number of true positives and fp the number of false positives. The precision is intuitively the ability of the classifier not to label a negative sample as positive."
 - *Recall*:: "The recall is the ratio tp / (tp + fn) where tp is the number of true positives and fn the number of false negatives. The recall is intuitively the ability of the classifier to find all the positive samples."
 - *f1*:: "The F-beta score can be interpreted as a weighted harmonic mean of the precision and recall, where an F-beta score reaches its best value at 1 and worst score at 0."
@@ -188,7 +189,7 @@ Hole filling code is available here: https://github.com/kxygk/mlfinal/blob/maste
 
 Non-numerical features are those represented with a character string. These include things like: the *Description*, *Title*, *Composer* and *Artist*. Naturally these encode a lot of relevant information when comparing tracks. But these values present an extra challenge as they lack a meaningful numerical representation. The binary representation of the strings do not correspond to any "closeness" between values. For instance a change in capitalization could lead to two values having drastically different binary representations. To generate more meaningful and directly useable values we convert each string to a vector representation using the general purpose pre-trained *bert2vec* neural network model.
 
-This is provided to us by the PyTorch project: https://pypi.org/project/pytorch-pretrained-bert/
+This is provided to us by the HuggingFace project: https://huggingface.co/docs/transformers/model_doc/bert-generation
 
 This model allows us to transform each strings in to a set of numerical columns. The number of columns is in the thousands, and it makes further training impractical. We reduce the number of dimensions by doing a simple linear regression between bert-generated-vectors and our target Danceability. We keep X amount of features/dimensions and discard the rest
 
