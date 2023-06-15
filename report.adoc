@@ -5,6 +5,10 @@
 :reproducible:
 :nofooter:
 
+= Final Machine Learning Project
+
+by *何品諭* and *George Kontsevich (康笑愚)*
+
 
 Dear Nijika,
 
